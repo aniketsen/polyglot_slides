@@ -77,3 +77,28 @@ because in `PyTorch 2.4`, `GradScaler` was relocated to `torch.amp.Gradscaler`
 ::: {.fragment}
 ### It also makes life much easier for us!! 😅
 :::
+
+## How can we be on the same environment?
+
+::: {.incremental}
+- We use <em>Marvin</em>!!
+:::
+
+<br/>
+
+::: {.fragment}
+<em>Marvin</em> is a State of the Art (for 2022) Tier 3 HPC cluster at the University of Bonn
+:::
+
+::: {.incremental}
+- We have created temporary accounts on Marvin for all of you
+  - you should have received an email (please say now if you haven't)
+- We have also reserved a few nodes for the workshop
+- We will be doing everything on Marvin remotely
+:::
+
+<br/>
+
+::: {.fragment}
+### A huge thanks to the HPC Team of Uni Bonn!
+:::
