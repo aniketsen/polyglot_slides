@@ -1,0 +1,79 @@
+---
+title: ""
+format:
+  revealjs: 
+    width: 1600
+    height: 900
+    margin: 0.1
+    font-size: 56px
+    highlight-style: monokai
+    theme: polyglot-theme.scss
+    include-after-body: logos.html
+    title-slide-attributes:
+      data-state: "hide-slide"
+---
+
+## {data-background-image="images/title.png" data-background-size="cover"}
+
+## Why we need to set up?
+
+:::{.incremental}
+- This is a hands-on workshop $\xrightarrow{}$ we'll be coding a bunch of stuff
+- Working with code $\xrightarrow{}$ version control nightmare
+:::
+
+. . .
+
+### What I mean?
+
+::: {.fragment}
+``` {.python code-line-numbers="true"}
+import torch
+
+scaler = torch.cuda.amp.GradScaler()
+```
+:::
+
+::: {.fragment}
+works fine for `PyTorch >= 1.6`
+:::
+
+::: {.fragment}
+but for `PyTorch >= 2.4` we get
+
+``` {.bash code-line-numbers="false"}
+ModuleAttributeError: module 'torch.cuda.amp' has no attribute 'GradScaler'
+```
+:::
+
+::: {.fragment}
+### Why?
+:::
+
+::: {.fragment}
+because in `PyTorch 2.4`, `GradScaler` was relocated to `torch.amp.Gradscaler`
+:::
+
+## Why we need to set up?
+
+<br/>
+
+::: {.incremental}
+- We will also be working together $\xrightarrow{}$ so we need to be on the same page
+- So that all our bugs bug us equally 😄
+:::
+
+. . .
+
+<br/>
+
+### How can we all be on the same page?
+
+::: {.incremental}
+- We all work on the same environment
+- We all work with the same software stack
+:::
+
+::: {.fragment}
+### It also makes life much easier for us!! 😅
+:::

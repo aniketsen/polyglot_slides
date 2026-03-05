@@ -1,0 +1,22 @@
+<div class="logo-top-right"><img src="images/polyglot.png" /></div>
+<div class="logo-bottom-left"><img src="images/tra-logo.png" /></div>
+<div class="logo-bottom-right"><img src="images/unibonn-logo.png" /></div>
+<div class="footer-title">POLYGLOT</div>
+<div class="footer-pagenum"></div>
+<script>
+  Reveal.on('slidechanged', e => {
+    document.querySelector('.footer-pagenum').textContent = Reveal.getState().indexh + 1;
+  });
+  Reveal.on('ready', e => {
+    document.querySelector('.footer-pagenum').textContent = Reveal.getState().indexh + 1;
+  });
+  Reveal.on('slidechanged', e => {
+    const isFirst = e.indexh === 0;
+    document.querySelectorAll('.logo-top-right, .logo-bottom-left, .logo-bottom-right, .footer-title, .footer-pagenum')
+      .forEach(el => el.style.display = isFirst ? 'none' : '');
+  });
+  Reveal.on('ready', e => {
+    document.querySelectorAll('.logo-top-right, .logo-bottom-left, .logo-bottom-right, .footer-title, .footer-pagenum')
+      .forEach(el => el.style.display = 'none'); // hidden on load (slide 1)
+  });
+</script>
