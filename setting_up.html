@@ -94,7 +94,7 @@
     code span.vs { color: #e6db74; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="setting_up_files/libs/revealjs/dist/theme/quarto-b6365fe59f1d05116916522849504e1f.css">
+  <link rel="stylesheet" href="setting_up_files/libs/revealjs/dist/theme/quarto-0b47fabd6ef8a42f23a3c6755d80bef1.css">
   <link href="setting_up_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="setting_up_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="setting_up_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -263,6 +263,66 @@
 <div class="fragment">
 <h3 id="a-huge-thanks-to-the-hpc-team-of-uni-bonn">A huge thanks to the HPC Team of Uni Bonn!</h3>
 </div>
+</section>
+<section id="how-do-we-work-remotely-on-marvin" class="slide level2">
+<h2>How do we work remotely on Marvin?</h2>
+<ul>
+<li class="fragment">Using <em>SSH</em> (Secure Shell)</li>
+<li class="fragment">For that we need to set up a SSH key pair for you to access Marvin securely</li>
+</ul>
+<div class="fragment">
+<p>Open <code>Terminal</code> on your laptop and type the following command</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>you will be asked to enter a file name to save the key</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">Generating</span> public/private ed25519 key pair.</span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> file in which to save the key <span class="er">(</span><span class="ex">/home/</span><span class="op">&lt;</span>username<span class="op">&gt;</span>/.ssh/id_ed25519<span class="kw">)</span><span class="bu">:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>you will also be asked to enter a passphrase</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> passphrase for <span class="st">"/home/&lt;username&gt;/.ssh/id_ed25519"</span> <span class="er">(</span><span class="ex">empty</span> for no passphrase<span class="kw">)</span><span class="bu">:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="color: red !important;">
+<p>IMPORTANT!! Please enter a strong passphrase and remember it, otherwise you won’t be able to access Marvin</p>
+</div>
+</div>
+</section>
+<section id="providing-the-public-key-to-marvin" class="slide level2">
+<h2>Providing the public key to Marvin</h2>
+<ul>
+<li class="fragment">Go to the Marvin user portal: <a href="https://freeipa.hpc.uni-bonn.de/" target="_blank">https://freeipa.hpc.uni-bonn.de/</a></li>
+<li class="fragment">Log in with the credentials you received via email from HPC@UniBonn</li>
+</ul>
+<div class="columns">
+<div class="column fragment" style="width:30%;">
+<p><img data-src="images/marvin_ssh_img1.png" style="width:100.0%"></p>
+</div><div class="column" style="width:40%;">
+<ul>
+<li class="fragment">Click on <code>SSH public keys -&gt; Add</code> on the right side of the page</li>
+<li class="fragment">Copy the content of your public key file (e.g., <code>~/.ssh/id_ed25519.pub</code>) and paste it into the <code>Public key</code> field</li>
+</ul>
+</div><div class="column fragment" style="width:30%;">
+<p><img data-src="images/marvin_ssh_img2.png" style="width:100.0%"></p>
+<ul>
+<li class="fragment">Click on <code>Set</code> to save the public key</li>
+</ul>
+</div></div>
+</section>
+<section id="providing-the-public-key-to-marvin-1" class="slide level2">
+<h2>Providing the public key to Marvin</h2>
+<ul>
+<li>Go to the Marvin user portal: <a href="https://freeipa.hpc.uni-bonn.de/" target="_blank">https://freeipa.hpc.uni-bonn.de/</a></li>
+<li>Log in with the credentials you received via email from HPC@UniBonn</li>
+</ul>
+<div class="columns">
+<div class="column">
+<p><img data-src="images/marvin_ssh_img3.png" style="width:100.0%"></p>
+</div><div class="column">
+<p>And finally, click <code>Save</code> in the top left bar to save the changes to your account</p>
+<div class="fragment" style="color: red !important;">
+<p>If something went wrong, please tell us now!</p>
+</div>
+</div></div>
 
 </section>
     </div>
@@ -451,7 +511,7 @@
         height: 900,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.1,
+        margin: 3.0e-2,
 
         math: {
           mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
