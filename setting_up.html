@@ -323,7 +323,164 @@
 <p>If something went wrong, please tell us now!</p>
 </div>
 </div></div>
+</section>
+<section id="set-up-an-ssh-config-file" class="slide level2">
+<h2>Set up an SSH config file</h2>
+<ul>
+<li class="fragment">To make it easier to connect to Marvin, we will set up an SSH config file on your laptop</li>
+<li class="fragment">This will allow us to connect to Marvin using a simple command like <code>ssh marvin</code> instead of <code>ssh -i /path/to/your/private/key &lt;username&gt;@marvin.hpc.uni-bonn.de</code></li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<p>Create a file named <code>config</code> in the <code>~/.ssh/</code> directory (if it doesn’t already exist)</p>
+</div>
+<div class="fragment">
+<p>And add the following content to the <code>config</code> file</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> marvin</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="ex">HostName</span> marvin.hpc.uni-bonn.de</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="ex">User</span> <span class="op">&lt;</span>username<span class="op">&gt;</span></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="ex">IdentityFile</span> /path/to/your/private/key <span class="er">(</span><span class="ex">e.g.,</span> ~/.ssh/id_ed25519<span class="kw">)</span></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="ex">IdentitiesOnly</span> yes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="lets-test-it-out" class="slide level2">
+<h2>Let’s test it out!</h2>
+<div class="fragment">
+<p>Open a new terminal and type the following command</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> marvin</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>If everything is set up correctly, you will be greeted with this</p>
+</div>
+<p><br></p>
+<div class="columns">
+<div class="column fragment" style="width:40%;">
+<p><img data-src="images/marvin_ssh_img4.png" style="width:100.0%"></p>
+</div><div class="column fragment" style="width:60%;">
+<p>Let us know now if you do not see this welcome message after running <code>ssh marvin</code></p>
+</div></div>
+</section>
+<section id="lets-create-a-workspace-for-you" class="slide level2">
+<h2>Let’s create a workspace for you!</h2>
+<p><br></p>
+<div class="fragment">
+<p>In the terminal where you are connected to Marvin, run the following command to create a workspace for you</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-O</span> create_workspace_polyglot.sh https://tinyurl.com/polyglot-st-cr <span class="dt">\</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> +x create_workspace_polyglot.sh <span class="dt">\</span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&amp;&amp;</span> <span class="ex">./create_workspace_polyglot.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>This will create a workspace for you in the <code>/lustre/scratch/data/&lt;username&gt;-polyglot</code> directory</p>
+</div>
+<p><br></p>
+<div class="fragment">
+<p>Next we will set up some environment variables that will be useful for us later on</p>
+</div>
+</section>
+<section id="setting-up-environment-variables" class="slide level2">
+<h2>Setting up environment variables</h2>
+<div class="fragment">
+<p>In the terminal where you are connected to Marvin, run the following command to set up the environment variables</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-O</span> set_env_vars_polyglot.sh https://tinyurl.com/polyglot-st-env <span class="dt">\</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&amp;&amp;</span> <span class="bu">source</span> set_env_vars_polyglot.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p>This will set up the following environment variables for you:</p>
+</div>
+<ul>
+<li class="fragment"><code>WS_DIR</code>: the directory of your workspace (e.g., <code>/lustre/scratch/data/&lt;username&gt;-polyglot</code>)</li>
+<li class="fragment"><code>cdws</code>: a shortcut command to change to your workspace directory (i.e., <code>cd $WS_DIR</code>)</li>
+<li class="fragment"><code>WS_COMMON</code> : the directory of the common files that we will be using in the workshop (<code>/lustre/scratch/data/nklugeco_hpc-workshop</code>)</li>
+<li class="fragment"><code>sbatch_poly</code> : a shortcut command to submit a job to the cluster using the correct reservation and account (<code>sbatch --reservation=polyglot_[mon,tue...] --account=tmp_polyglot</code>)</li>
+</ul>
+</section>
+<section id="setting-up-environment-variables-1" class="slide level2">
+<h2>Setting up environment variables</h2>
+<div class="fragment">
+<p>To make the environment variables available throughout the workshop, we add it to your <code>.bashrc</code> (this is a script that runs every time you log in to Marvin)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"source ~/set_env_vars_polyglot.sh"</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment" style="color: red !important;">
+<p>Its completely understandable if you don’t want to do this (especially if you already use Marvin regularly)</p>
+</div>
+<div class="fragment">
+<p>In that case, you need to run the following every time you start a new session on Marvin</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/set_env_vars_polyglot.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><br></p>
+<div class="fragment">
+<p>That was a lot of setup (and working with a terminal can be intimidating), so let’s take a break!!</p>
+</div>
+</section>
+<section id="lets-make-things-slightly-easier-for-you" class="slide level2">
+<h2>Let’s make things slightly easier for you!</h2>
+<div class="fragment">
+<p>Working with the terminal can be intimidating, especially if you are not used to it</p>
+</div>
+<div class="fragment">
+<p>To make things easier for you, we would do everything through <code>VSCode</code></p>
+</div>
+<div class="fragment" style="color: red !important;">
+<p>This is completely optional, you can still follow along using the terminal if you prefer</p>
+</div>
+<div class="fragment">
+<p>You can download <code>VSCode</code> from the official website: <a href="https://code.visualstudio.com/download" target="_blank">https://code.visualstudio.com/download</a></p>
+</div>
+<div class="fragment">
+<p>Choose the option that suits your system</p>
+<p><img data-src="images/vscode_download.png" style="width:50.0%"></p>
+<p>Feel free to ask us for help if you are not sure which one to choose or if you have any issues installing <code>VSCode</code></p>
+</div>
+</section>
+<section id="remote-development-with-vscode" class="slide level2">
+<h2>Remote development with VSCode</h2>
+<div class="fragment">
+<p><code>VSCode</code> has a great extension called <code>Remote - SSH</code> that allows you to connect to a remote server (like Marvin) and work with the files on that server as if they were on your local machine</p>
+</div>
+<div class="columns">
+<div class="column fragment" style="width:40%;">
+<p><img data-src="images/vscode_setup_img1.png" style="width:100.0%"></p>
+</div><div class="column fragment" style="width:60%;">
+<p>Got to the extensions tab in <code>VSCode</code> and search for <code>Remote - SSH</code> and install it</p>
+<div class="fragment">
+<p><img data-src="images/vscode_setup_img2.png" style="width:100.0%"></p>
+</div>
+</div></div>
+</section>
+<section id="connecting-to-marvin-with-vscode" class="slide level2">
+<h2>Connecting to Marvin with VSCode</h2>
+<div class="fragment">
+<p>On <code>VSCode</code>, press <code>F1</code> or <code>Ctrl + Shift + P</code> to open the command palette and type</p>
+<p><img data-src="images/vscode_setup_img3.png" style="width:60.0%"></p>
+</div>
+<div class="fragment">
+<p>Select <code>marvin</code> from the list of hosts (if you have many)</p>
+<p><img data-src="images/vscode_setup_img4.png" style="width:60.0%"></p>
+</div>
+<div class="fragment">
+<p>If all our previous steps were successful, you should be now running a <code>VSCode</code> server on Marvin</p>
+</div>
+</section>
+<section id="setting-up-vscode-for-remote-development" class="slide level2">
+<h2>Setting up VSCode for remote development</h2>
+<div class="fragment">
+<p>Now that we are connected to Marvin with <code>VSCode</code>, we open the workspace directory that we created earlier</p>
+</div>
+<div class="columns">
+<div class="column fragment">
+<p>Press <code>Ctrl + k</code> followed by <code>Ctrl + o</code> (or <code>File -&gt; Open Folder</code>) and navigate to your workspace directory</p>
+<p><img data-src="images/vscode_setup_img5.png" style="width:80.0%"></p>
+</div><div class="column fragment">
+<p>We can also open up a terminal in <code>VSCode</code> at this directory by going to <code>Terminal -&gt; New Terminal</code> (or pressing <code>Ctrl + Shift + `</code>)</p>
+<p><img data-src="images/vscode_setup_img6.png" style="width:80.0%"></p>
+</div></div>
+<div class="fragment">
+<h3 id="perfect-now-we-are-all-working-with-the-same-environment">Perfect!! Now we are all working with the same environment 🎉</h3>
+<div class="fragment">
+<p>This is going to be our main window for the rest of the workshop</p>
+</div>
 
+</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

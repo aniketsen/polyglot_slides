@@ -182,3 +182,217 @@ If something went wrong, please tell us now!
 :::
 :::
 :::
+
+## Set up an SSH config file
+
+::: {.incremental}
+- To make it easier to connect to Marvin, we will set up an SSH config file on your laptop
+- This will allow us to connect to Marvin using a simple command like `ssh marvin` instead of `ssh -i /path/to/your/private/key <username>@marvin.hpc.uni-bonn.de`
+:::
+
+<br/>
+
+::: {.fragment}
+Create a file named `config` in the `~/.ssh/` directory (if it doesn't already exist)
+:::
+
+::: {.fragment}
+And add the following content to the `config` file
+
+``` {.bash code-line-numbers="false"}
+Host marvin
+  HostName marvin.hpc.uni-bonn.de
+  User <username>
+  IdentityFile /path/to/your/private/key (e.g., ~/.ssh/id_ed25519)
+  IdentitiesOnly yes
+```
+:::
+
+## Let's test it out!
+
+::: {.fragment}
+Open a new terminal and type the following command
+
+``` {.bash code-line-numbers="false"}
+ssh marvin
+```
+:::
+
+::: {.fragment}
+If everything is set up correctly, you will be greeted with this
+:::
+
+<br/>
+
+::: {.columns}
+::: {.column width="40%" .fragment}
+![](images/marvin_ssh_img4.png){width=100%}
+:::
+::: {.column width="60%" .fragment}
+Let us know now if you do not see this welcome message after running `ssh marvin`
+:::
+:::
+
+## Let's create a workspace for you!
+
+<br/>
+
+::: {.fragment}
+In the terminal where you are connected to Marvin, run the following command to create a workspace for you
+``` {.bash code-line-numbers="false"}
+wget -O create_workspace_polyglot.sh https://tinyurl.com/polyglot-st-cr \
+  && chmod +x create_workspace_polyglot.sh \
+  && ./create_workspace_polyglot.sh
+```
+:::
+
+::: {.fragment}
+This will create a workspace for you in the `/lustre/scratch/data/<username>-polyglot` directory
+:::
+
+<br/>
+
+::: {.fragment}
+Next we will set up some environment variables that will be useful for us later on
+:::
+
+
+## Setting up environment variables
+
+::: {.fragment}
+In the terminal where you are connected to Marvin, run the following command to set up the environment variables
+``` {.bash code-line-numbers="false"}
+wget -O set_env_vars_polyglot.sh https://tinyurl.com/polyglot-st-env \
+  && source set_env_vars_polyglot.sh
+```
+:::
+
+::: {.fragment}
+This will set up the following environment variables for you:
+:::
+
+::: {.incremental}
+- `WS_DIR`: the directory of your workspace (e.g., `/lustre/scratch/data/<username>-polyglot`)
+- `cdws`: a shortcut command to change to your workspace directory (i.e., `cd $WS_DIR`)
+- `WS_COMMON` : the directory of the common files that we will be using in the workshop (`/lustre/scratch/data/nklugeco_hpc-workshop`)
+- `sbatch_poly` : a shortcut command to submit a job to the cluster using the correct reservation and account (`sbatch --reservation=polyglot_[mon,tue...] --account=tmp_polyglot`)
+:::
+
+## Setting up environment variables
+
+::: {.fragment}
+To make the environment variables available throughout the workshop, we add it to your `.bashrc`
+(this is a script that runs every time you log in to Marvin)
+``` {.bash code-line-numbers="false"}
+echo "source ~/set_env_vars_polyglot.sh" >> ~/.bashrc
+```
+:::
+
+::: {style="color: red !important;" .fragment}
+Its completely understandable if you don't want to do this (especially if you already use Marvin regularly)
+:::
+
+::: {.fragment}
+In that case, you need to run the following every time you start a new session on Marvin
+``` {.bash code-line-numbers="false"}
+source ~/set_env_vars_polyglot.sh
+```
+:::
+
+<br/>
+
+::: {.fragment}
+That was a lot of setup (and working with a terminal can be intimidating), so let's take a break!!
+:::
+
+## Let's make things slightly easier for you!
+
+::: {.fragment}
+Working with the terminal can be intimidating, especially if you are not used to it
+:::
+
+::: {.fragment}
+To make things easier for you, we would do everything through `VSCode`
+:::
+
+::: {style="color: red !important;" .fragment}
+This is completely optional, you can still follow along using the terminal if you prefer
+:::
+
+::: {.fragment}
+You can download `VSCode` from the official website: <a href="https://code.visualstudio.com/download" target="_blank">https://code.visualstudio.com/download</a>
+:::
+
+::: {.fragment}
+Choose the option that suits your system
+
+![](images/vscode_download.png){width=50%}
+
+Feel free to ask us for help if you are not sure which one to choose
+or if you have any issues installing `VSCode`
+:::
+
+## Remote development with VSCode
+
+::: {.fragment}
+`VSCode` has a great extension called `Remote - SSH` that allows you to connect to a remote server (like Marvin) 
+and work with the files on that server as if they were on your local machine
+:::
+
+::: {.columns}
+::: {.column width="40%" .fragment}
+![](images/vscode_setup_img1.png){width=100%}
+:::
+::: {.column width="60%" .fragment}
+Got to the extensions tab in `VSCode` and search for `Remote - SSH` and install it
+
+::: {.fragment}
+![](images/vscode_setup_img2.png){width=100%}
+:::
+:::
+:::
+
+## Connecting to Marvin with VSCode
+
+::: {.fragment}
+On `VSCode`, press `F1` or `Ctrl + Shift + P` to open the command palette and type
+
+![](images/vscode_setup_img3.png){width=60%}
+:::
+
+::: {.fragment}
+Select `marvin` from the list of hosts (if you have many)
+
+![](images/vscode_setup_img4.png){width=60%}
+:::
+
+::: {.fragment}
+If all our previous steps were successful, you should be now running a `VSCode` server on Marvin
+:::
+
+## Setting up VSCode for remote development
+
+::: {.fragment}
+Now that we are connected to Marvin with `VSCode`, we open the workspace directory that we created earlier
+:::
+
+::: {.columns}
+::: {.column .fragment}
+Press `Ctrl + k` followed by `Ctrl + o` (or `File -> Open Folder`) and navigate to your workspace directory
+
+![](images/vscode_setup_img5.png){width=80%}
+:::
+::: {.column .fragment}
+We can also open up a terminal in `VSCode` at this directory by going to `Terminal -> New Terminal` (or pressing `` Ctrl + Shift + ` ``)
+
+![](images/vscode_setup_img6.png){width=80%}
+:::
+:::
+
+. . . 
+
+### Perfect!! Now we are all working with the same environment 🎉
+
+::: {.fragment}
+This is going to be our main window for the rest of the workshop
+:::
