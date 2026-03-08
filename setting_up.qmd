@@ -240,9 +240,9 @@ Let us know now if you do not see this welcome message after running `ssh marvin
 ::: {.fragment}
 In the terminal where you are connected to Marvin, run the following command to create a workspace for you
 ``` {.bash code-line-numbers="false"}
-wget -O create_workspace_polyglot.sh https://tinyurl.com/polyglot-st-cr \
-  && chmod +x create_workspace_polyglot.sh \
-  && ./create_workspace_polyglot.sh
+wget -O ~/create_workspace_polyglot.sh https://tinyurl.com/polyglot-st-cr \
+  && chmod +x ~/create_workspace_polyglot.sh \
+  && ~/create_workspace_polyglot.sh
 ```
 :::
 
@@ -262,8 +262,8 @@ Next we will set up some environment variables that will be useful for us later 
 ::: {.fragment}
 In the terminal where you are connected to Marvin, run the following command to set up the environment variables
 ``` {.bash code-line-numbers="false"}
-wget -O set_env_vars_polyglot.sh https://tinyurl.com/polyglot-st-env \
-  && source set_env_vars_polyglot.sh
+wget -O ~/set_env_vars_polyglot.sh https://tinyurl.com/polyglot-st-env \
+  && source ~/set_env_vars_polyglot.sh
 ```
 :::
 
