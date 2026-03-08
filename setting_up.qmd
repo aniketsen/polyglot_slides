@@ -396,3 +396,417 @@ We can also open up a terminal in `VSCode` at this directory by going to `Termin
 ::: {.fragment}
 This is going to be our main window for the rest of the workshop
 :::
+
+## Now we need to set up the software stack
+
+::: {.fragment}
+Now that we are all working on the same environment, we need to set up the same software stack for everyone
+:::
+
+::: {.fragment}
+We will ensure this by setting up an identical `Python` virtual environment for everyone
+:::
+
+::: {.fragment}
+Run the following command in the terminal (either in `VSCode` or the regular terminal) connected to Marvin
+``` {.bash code-line-numbers="false"}
+wget -O ~/create_venv_polyglot.sh https://tinyurl.com/polyglot-st-venv \
+  && chmod +x ~/create_venv_polyglot.sh \
+  && ~/create_venv_polyglot.sh
+```
+:::
+
+<br/>
+
+::: {.fragment}
+### This is going to take a while... Good time to get some coffee! ☕
+:::
+
+::: {.fragment}
+Just to be certain, let's run the command again
+:::
+
+::: {.fragment}
+### Great! Now we have the same software stack set up for everyone 🎉
+:::
+
+## Let's run a simple program
+
+::: {.fragment}
+GEMM(General Matrix Multiply)s are at the heart of deep learning <a href="https://petewarden.com/2015/04/20/why-gemm-is-at-the-heart-of-deep-learning/" target="_blank">[Pete Warden]</a>
+:::
+
+::: {.fragment}
+So we will run a simple program that multiplies two square matrices together using `PyTorch`
+:::
+
+<br/>
+
+::: {.fragment}
+Let's get the exercise with the following command
+``` {.bash code-line-numbers="false"}
+cdws
+git clone https://github.com/Polygl0t/ex_setup.git
+cd ex_setup
+```
+:::
+
+<br/>
+
+::: {.fragment}
+### Let's take a look at the code!
+:::
+
+## torch_mm.py
+
+``` {.python code-line-numbers="true"}
+import torch
+import time
+import argparse
+
+N_warm = 100
+N_bench = 1000
+
+def benchmark_mm(N : int):
+  A = torch.rand(N, N)
+  B = torch.rand(N, N)
+  # warmup
+  for _ in range(N_warm):
+    C = torch.mm(A, B)
+  start_time = time.time()
+  for _ in range(N_bench):
+    C = torch.mm(A, B)
+  end_time = time.time()
+  avg_time = (end_time - start_time) / N_bench
+  print(f"Average time for torch.mm with N={N}: {avg_time:.6f} seconds")
+
+def main():
+  # parse command line arguments
+  parser = argparse.ArgumentParser(description="Benchmark torch.mm")
+  parser.add_argument("--N", type=int, default=1024, help="Size of the matrices")
+  args = parser.parse_args()
+  benchmark_mm(args.N)
+
+if __name__ == "__main__":
+  main()
+```
+
+## torch_mm.py
+
+``` {.python code-line-numbers="|1-3"}
+import torch
+import time
+import argparse
+
+N_warm = 100
+N_bench = 1000
+
+def benchmark_mm(N : int):
+  A = torch.rand(N, N)
+  B = torch.rand(N, N)
+  # warmup
+  for _ in range(N_warm):
+    C = torch.mm(A, B)
+  start_time = time.time()
+  for _ in range(N_bench):
+    C = torch.mm(A, B)
+  end_time = time.time()
+  avg_time = (end_time - start_time) / N_bench
+  print(f"Average time for torch.mm with N={N}: {avg_time:.6f} seconds")
+
+def main():
+  # parse command line arguments
+  parser = argparse.ArgumentParser(description="Benchmark torch.mm")
+  parser.add_argument("--N", type=int, default=1024, help="Size of the matrices")
+  args = parser.parse_args()
+  benchmark_mm(args.N)
+
+if __name__ == "__main__":
+  main()
+```
+
+`import` the necessary libraries (`torch`, `time`, and `argparse`)
+
+## torch_mm.py
+
+``` {.python code-line-numbers="|5-6"}
+import torch
+import time
+import argparse
+
+N_warm = 100
+N_bench = 1000
+
+def benchmark_mm(N : int):
+  A = torch.rand(N, N)
+  B = torch.rand(N, N)
+  # warmup
+  for _ in range(N_warm):
+    C = torch.mm(A, B)
+  start_time = time.time()
+  for _ in range(N_bench):
+    C = torch.mm(A, B)
+  end_time = time.time()
+  avg_time = (end_time - start_time) / N_bench
+  print(f"Average time for torch.mm with N={N}: {avg_time:.6f} seconds")
+
+def main():
+  # parse command line arguments
+  parser = argparse.ArgumentParser(description="Benchmark torch.mm")
+  parser.add_argument("--N", type=int, default=1024, help="Size of the matrices")
+  args = parser.parse_args()
+  benchmark_mm(args.N)
+
+if __name__ == "__main__":
+  main()
+```
+
+Define the number of warmup iterations (`N_warm`) and the number of benchmark iterations (`N_bench`)
+for the matrix multiplication
+
+## torch_mm.py
+
+``` {.python code-line-numbers="|8|9-10|11-13|14-17|18-19" style="max-height: 300px; overflow-y: auto;"}
+import torch
+import time
+import argparse
+
+N_warm = 100
+N_bench = 1000
+
+def benchmark_mm(N : int):
+  A = torch.rand(N, N)
+  B = torch.rand(N, N)
+  # warmup
+  for _ in range(N_warm):
+    C = torch.mm(A, B)
+  start_time = time.time()
+  for _ in range(N_bench):
+    C = torch.mm(A, B)
+  end_time = time.time()
+  avg_time = (end_time - start_time) / N_bench
+  print(f"Average time for torch.mm with N={N}: {avg_time:.6f} seconds")
+
+def main():
+  # parse command line arguments
+  parser = argparse.ArgumentParser(description="Benchmark torch.mm")
+  parser.add_argument("--N", type=int, default=1024, help="Size of the matrices")
+  args = parser.parse_args()
+  benchmark_mm(args.N)
+
+if __name__ == "__main__":
+  main()
+```
+
+Define the `benchmark_mm` function which benchmarks the `torch.mm` function for multiplying two square matrices of size `N x N`
+
+- It creates two random matrices `A` and `B` of size `N x N`
+- It performs `N_warm` warmup iterations of matrix multiplication
+- It then performs `N_bench` benchmark iterations of matrix multiplication and times it with `time.time()`
+- Finally, it calculates and prints the average time taken for the matrix multiplication
+
+## torch_mm.py
+
+``` {.python code-line-numbers="|21-26"}
+import torch
+import time
+import argparse
+
+N_warm = 100
+N_bench = 1000
+
+def benchmark_mm(N : int):
+  A = torch.rand(N, N)
+  B = torch.rand(N, N)
+  # warmup
+  for _ in range(N_warm):
+    C = torch.mm(A, B)
+  start_time = time.time()
+  for _ in range(N_bench):
+    C = torch.mm(A, B)
+  end_time = time.time()
+  avg_time = (end_time - start_time) / N_bench
+  print(f"Average time for torch.mm with N={N}: {avg_time:.6f} seconds")
+
+def main():
+  # parse command line arguments
+  parser = argparse.ArgumentParser(description="Benchmark torch.mm")
+  parser.add_argument("--N", type=int, default=1024, help="Size of the matrices")
+  args = parser.parse_args()
+  benchmark_mm(args.N)
+
+if __name__ == "__main__":
+  main()
+```
+
+The `main` function parses the command line arguments to get the size of the matrices `N` and calls the `benchmark_mm` function with that size
+
+## torch_mm.sh
+
+``` {.bash code-line-numbers="true"}
+#!/bin/bash
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=mlgpu_devel
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --oversubscribe
+
+source ~/set_env_vars_polyglot.sh
+source ${MOD_FILE}
+source ${WSDIR}/.venv_polyglot_t1/bin/activate
+mkdir -p ${WSDIR}/ex_setup/logs
+out_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.out"
+err_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.err"
+N=1024
+srun python ${WSDIR}/ex_setup/torch_mm.py --N $N 1> $out_file 2> $err_file
+exit
+```
+
+This is a `SLURM` job script that we will use to run the `torch_mm.py` program on the cluster
+
+## torch_mm.sh
+
+``` {.bash code-line-numbers="|2|3|4|5|6" style="max-height: 400px; overflow-y: auto;"}
+#!/bin/bash
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=mlgpu_devel
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --oversubscribe
+
+source ~/set_env_vars_polyglot.sh
+source ${MOD_FILE}
+source ${WSDIR}/.venv_polyglot_t1/bin/activate
+mkdir -p ${WSDIR}/ex_setup/logs
+out_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.out"
+err_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.err"
+N=1024
+srun python ${WSDIR}/ex_setup/torch_mm.py --N $N 1> $out_file 2> $err_file
+exit
+```
+
+- It requests resources for 1 task
+- with 1 cpu per task
+- on the `mlgpu_devel` partition
+- for a maximum time of 10 minutes
+- and a maximum memory of 16 GB
+
+## torch_mm.sh
+
+``` {.bash code-line-numbers="|9|10|11|12|13-14" style="max-height: 400px; overflow-y: auto;"}
+#!/bin/bash
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=mlgpu_devel
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --oversubscribe
+
+source ~/set_env_vars_polyglot.sh
+source ${MOD_FILE}
+source ${WSDIR}/.venv_polyglot_t1/bin/activate
+mkdir -p ${WSDIR}/ex_setup/logs
+out_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.out"
+err_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.err"
+N=1024
+srun python ${WSDIR}/ex_setup/torch_mm.py --N $N 1> $out_file 2> $err_file
+exit
+```
+
+- Set the environment variables
+- Load the necessary modules
+- Activate the `Python` virtual environment that we set up earlier
+- Create a directory for the logs if it doesn't already exist
+- Define the output and error log file paths using the `SLURM_JOB_ID` environment variable
+
+## torch_mm.sh
+
+``` {.bash code-line-numbers="|15|16"}
+#!/bin/bash
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --partition=mlgpu_devel
+#SBATCH --time=00:10:00
+#SBATCH --mem=16G
+#SBATCH --oversubscribe
+
+source ~/set_env_vars_polyglot.sh
+source ${MOD_FILE}
+source ${WSDIR}/.venv_polyglot_t1/bin/activate
+mkdir -p ${WSDIR}/ex_setup/logs
+out_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.out"
+err_file="${WSDIR}/ex_setup/logs/log.torch_mm.$SLURM_JOB_ID.err"
+N=1024
+srun python ${WSDIR}/ex_setup/torch_mm.py --N $N 1> $out_file 2> $err_file
+exit
+```
+
+- Define the size of the matrices `N` (you can change this to benchmark different sizes)
+- Run the `torch_mm.py` program using `srun`
+
+## Let's run the code!
+
+::: {.fragment}
+you can run the `torch_mm.sh` script using the following command
+``` {.bash code-line-numbers="false"}
+sbatch_poly torch_mm.sh
+```
+:::
+
+::: {.fragment}
+You can check the status of your job using the following command
+``` {.bash code-line-numbers="false"}
+squeue -u <username>
+```
+:::
+
+<br/>
+
+::: {.fragment}
+Once the job is finished, take a look at the output log file to see the results
+``` {.bash code-line-numbers="false"}
+cat ${WSDIR}/ex_setup/logs/log.torch_mm.<SLURM_JOB_ID>.out
+```
+:::
+
+<br/>
+
+::: {.fragment}
+What time did you get for the matrix multiplication? Try changing the size of the matrices `N` and see how it affects the time taken
+:::
+
+## Now some hands-on exercises
+
+<br/>
+
+::: {.fragment}
+### 1. Let's try to run the code with more threads
+:::
+
+<br/>
+
+::: {.fragment}
+### 2. Let's try to run the code on a GPU
+:::
+
+<br/>
+
+::: {.fragment}
+### 3. What happens if we work with lesser precision?
+:::
+
+<br/>
+
+::: {.fragment}
+### Feel free to play around with the code and see how it affects the performance of the matrix multiplication
+:::
+
+## That's all, folks! 🎉
+
+<br/>
+
+::: {.fragment}
+### Questions?
+:::
